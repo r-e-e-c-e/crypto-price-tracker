@@ -334,7 +334,7 @@
 				class:desc={$sortBy === 'currency' && $sortOrder === 'desc'}
 				onclick={() => setSortCriteria('currency')}
 			>
-				<div>Currency</div>
+				<div>Name</div>
 				<svg
 					class="sorted-icon"
 					width="16"
@@ -465,8 +465,7 @@
 	main {
 		max-width: 768px;
 		margin: 0 auto;
-		padding-top: 30px;
-		padding-bottom: 80vh;
+		padding: 30px 30px 80vh;
 	}
 
 	.page-header {
@@ -552,6 +551,9 @@
 			justify-content: space-between;
 			border-bottom: 2px solid #d3d6db;
 			margin-bottom: 10px;
+			position: sticky;
+			top: 0;
+			background: var(--body-background);
 
 			button.header-button {
 				display: flex;
@@ -589,6 +591,17 @@
 					cursor: pointer;
 					color: var(--blue);
 				}
+			}
+
+			&::after {
+				content: '';
+				display: block;
+				height: 10px;
+				background: linear-gradient(to bottom, var(--body-background), transparent);
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: -12px;
 			}
 		}
 
