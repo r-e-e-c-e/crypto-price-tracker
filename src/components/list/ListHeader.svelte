@@ -1,6 +1,6 @@
 <script>
 	import { setSortCriteria, sortBy, sortOrder } from '$lib/stores/currencyListStore';
-	import ArrowIcon from './icons/ArrowIcon.svelte';
+	import ArrowIcon from '../icons/ArrowIcon.svelte';
 </script>
 
 <header class="list-header">
