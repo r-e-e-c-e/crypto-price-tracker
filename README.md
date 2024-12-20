@@ -30,6 +30,8 @@ https://docs.cdp.coinbase.com/exchange/docs/welcome
 
 https://api.exchange.coinbase.com/products
 
+Docs: https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getproducts
+
 #### Cryptocurrency Ticker Endpoint
 
 https://api.exchange.coinbase.com/products/{product_id}/ticker
@@ -45,6 +47,32 @@ Requests per second per IP: 10
 Requests per second per IP in bursts: Up to 15
 
 ---
+
+## Development Log
+
+1. Get one off data example from Coinbase Products API to play around with locally.
+2. Create TypeScript types of received data objects.
+3. Send local example data to frontend via sveltekit loader to get a basic list displaying.
+4. Check out ticker API.
+5. Coinbase recommends to use WebSocket rather than polling. So will take the WS approach.
+6. Investigate WS setup.
+7. Coinbase Market Data feed is available without authentication.
+8. Implement websocket file for connecting and handling messages.
+9. Implement reusable store to init WS.
+10. Got 2 cryptocurrencies live updating via WS through hard coded IDs.
+11. Now to architect for performance for 50+ cryptocurrencies at the same time.
+12. Create types for WS state and messages.
+13. Create a map in data store that holds the latest price for each currency.
+14. https://docs.cdp.coinbase.com/exchange/docs/websocket-best-practices
+15. There are 200+ currencies to display. Questions:
+    1. Should I call /products on each page load or should I persist the list (in local storage or db) with a cache expiry.
+    2. The /products response does not include a price. So have to call /ticker for each currency. With a rate limit of 10 per second, that would take 20+ seconds to load. Which is unacceptable.
+    3. Should I wait until all prices for each currency are fetched via a queue before enabling the WebSocket connection? Or should I combine the REST responses with the WS messages for quicker filling of data?
+    4. Should I have the server constantly fetching up to date data as a cache and then enable WS connection right away on page load?
+    5. Should I only enable WS messages for currencies that are currently displaying on screen and within search filter?
+16. Save list data periodically in localStorage. Pull on load. Check expiry. Clear if expired.
+17. Scan through entire products list via a 10 by 10 queue to get initial prices list. Also connect to WS to get some live updates straight away.
+18. Turns out, upon connecting to WS, the WS responds with all of the latest prices in the subscription message. So no need to scan through via the queue.
 
 ---
 
