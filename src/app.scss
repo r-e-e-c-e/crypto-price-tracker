@@ -39,23 +39,31 @@ body {
 }
 
 button {
-    background: var(--blue);
     border: 0;
     height: 46px;
     padding: 0 20px;
     min-width: 100px;
     border-radius: 4px;
-    color: #fff;
     font-weight: 900;
     font-size: 16px;
-    text-shadow: 0 2px 1px rgb(0 0 0 / 20%);
-    box-shadow:
-        0 14px 12px -10px rgb(0 0 0 / 14%),
-        0 4px 10px rgb(0 0 0 / 14%);
+    border: 1px solid var(--grey-blue);
+    background: #fafafa;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
     transition: var(--transition);
 
     &:hover {
         cursor: pointer;
+        color: var(--blue);
+    }
+
+    &.primary {
+        background: var(--blue);
+        color: #fff;
+        text-shadow: 0 2px 1px rgb(0 0 0 / 20%);
+        border: 0;
+        box-shadow:
+            0 14px 12px -10px rgb(0 0 0 / 14%),
+            0 4px 10px rgb(0 0 0 / 14%);
     }
 }
 
