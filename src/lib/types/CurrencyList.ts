@@ -5,3 +5,5 @@ export type ListItem = {
 	volume: number | null;
 	lastUpdated: string;
 };
+
+export type StoredListData = { list: ListItem[]; storageDate: number };
