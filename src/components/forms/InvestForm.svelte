@@ -61,7 +61,7 @@
 <form onsubmit={handleBuy}>
 	<div class="fields">
 		<label class="field">
-			<div class="label">Cryptocurrency to buy</div>
+			<div class="label">Cryptocurrency to buy <span class="required">*</span></div>
 			<select name="cryptocurrency" id="cryptocurrency" bind:value={$formCryptocurrencyId}>
 				<option disabled selected value="">-- Select an option --</option>
 				{#each $sortedList as listItem}
@@ -71,7 +71,7 @@
 		</label>
 
 		<label class="field">
-			<div class="label">Investment amount in USD</div>
+			<div class="label">Investment amount in USD <span class="required">*</span></div>
 			<input type="number" name="amount" id="amount" bind:value={$formAmount} min="1" />
 		</label>
 	</div>
@@ -110,6 +110,10 @@
 		.label {
 			font-weight: bold;
 			margin-bottom: 10px;
+
+			.required {
+				color: red;
+			}
 		}
 
 		input,
