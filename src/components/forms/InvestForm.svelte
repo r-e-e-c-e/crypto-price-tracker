@@ -64,7 +64,7 @@
 			<div class="label">Cryptocurrency to buy</div>
 			<select name="cryptocurrency" id="cryptocurrency" bind:value={$formCryptocurrencyId}>
 				<option disabled selected value="">-- Select an option --</option>
-				{#each $list as listItem}
+				{#each $sortedList as listItem}
 					<option value={listItem.id}>{listItem.label}</option>
 				{/each}
 			</select>
