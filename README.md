@@ -73,27 +73,34 @@ Requests per second per IP in bursts: Up to 15
 16. Save list data periodically in localStorage. Pull on load. Check expiry. Clear if expired.
 17. Scan through entire products list via a 10 by 10 queue to get initial prices list. Also connect to WS to get some live updates straight away.
 18. Turns out, upon connecting to WS, the WS responds with all of the latest prices in the subscription message. So no need to scan through via the queue.
-19. I created most of the app in the single main page component for speed, but now need to break it into multiple components and stores.
+19. Lots of messages are coming through the WS, so adding a buffer with a throttle of 500ms, so that DOM updates aren't happening every couple ms.
+20. Create mobile-first design in Figma for rest of app.
+21. Clean up styles for list.
+22. Add list header for sorting of name and price.
+23. Add search input for filtering the list.
+24. I created most of the app in the single main page component for speed, but now I need to break it into multiple components and stores.
     1. Create list store.
     2. Clean up types.
     3. Create utils and consts files.
-20. Create investments modal with form.
-21. Create investments overview component to show on main page.
+25. Create investments modal with form.
+26. Create investments overview component to show on main page.
     1. Add investment date, and up/down calc.
-22. Create investments store.
+27. Create investments store.
     1. Create mapping from main list from investments list to get current value.
 
-## Notes
+## Post Development Notes
 
 I was originally going to store all data in a SqlLite DB file, but decided to instead to use SvelteKit's server actions to deliver Coinbase's products, and then cache them in a JSON file on the server.
 
 But then I thought to simply use local storage for this project, as it fulfills the needs of painting data very quickly upon loading the page with persisted data from the previous session.
 
-To improve this project I would move the Coinbase WebSocket connection to the backend, with the backend managing WebSockets to it's clients separately.
+To improve this project I would:
 
-I would add unit tests for each component. And E2E tests for the investment flow, searching, and sorting.
-
-I would also add a notification system instead of using window.alert();
+1. Move the Coinbase WebSocket connection to the backend, with the backend managing WebSockets to clients separately.
+2. Persist the price data in a db periodically, and serve that via SSR for fast initial paint, which will also work across multiple devices.
+3. Add unit tests for each component.
+4. Add E2E tests for the investment flow, searching, and sorting.
+5. Add a notification system instead of using window.alert().
 
 ---
 
@@ -101,11 +108,14 @@ I would also add a notification system instead of using window.alert();
 
 ## Running the Project
 
-1. Install latest LTS version of [Node](https://nodejs.org/en).
-2. Clone repo.
-3. Open root folder in IDE (e.g. [VS Code](https://code.visualstudio.com/download)).
-4. Install dependencies in the terminal with: `npm install`.
-5. Run app in dev mode with: `npm run dev`.
+Pre
+Install latest LTS version of [Node](https://nodejs.org/en).
+Clone repo.
+Open root folder in IDE (e.g. [VS Code](https://code.visualstudio.com/download)).
+
+1. Install dependencies: `npm install`.
+2. Run app in dev mode: `npm run dev`.
+3. Go to http://localhost:5173/.
 
 ## Building the Project
 
