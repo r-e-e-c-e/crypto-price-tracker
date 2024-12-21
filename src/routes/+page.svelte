@@ -12,16 +12,23 @@
 	import { createCoinbaseWebSocket } from '$lib/websocket.js';
 	import { onDestroy, onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-	import List from '../components/List.svelte';
+	import List from '../components/list/List.svelte';
 	import Search from '../components/Search.svelte';
+	import InvestForm from '../components/forms/InvestForm.svelte';
 	import '../app.scss';
+	import { getInvestmentsFromLocalStorage, investments } from '$lib/stores/investmentsStore';
+	import Investments from '../components/Investments.svelte';
+	import InvestDialog from '../components/dialogs/InvestDialog.svelte';
+	import PageHeader from '../components/PageHeader.svelte';
 
 	let disconnectFromWS = writable<Function | null>(null);
 	let throttleTimeout: ReturnType<typeof setTimeout> | null = null;
 
 	onMount(async () => {
+		// Set page title
 		document.title = 'Crypto Price Tracker';
 
+		// Load list data from local storage or fetch
 		const storedList = getListFromLocalStorage();
 
 		if (storedList) {
@@ -31,6 +38,13 @@
 
 			// Persist fetched list data to localStorage
 			persistListToLocalStorage($list);
+		}
+
+		// Load investments data from local storage
+		const storedInvestments = getInvestmentsFromLocalStorage();
+
+		if (storedInvestments) {
+			$investments = storedInvestments;
 		}
 
 		// No longer needed, as WS provides all prices on subscribe.
@@ -146,37 +160,31 @@
 
 		return newList;
 	}
+
+	let investDialogRef: InvestDialog;
 </script>
 
 <main>
-	<header class="page-header">
-		<h1 class="page-title">Crypto Price Tracker</h1>
-		<button
-			onclick={() => {
-				//TODO: Implement invest modal.
-			}}>Invest</button
-		>
-	</header>
+	<PageHeader onInvestClick={() => investDialogRef.openModal()} />
+
+	{#if $investments.length > 0}
+		<Investments />
+	{/if}
 
 	<Search />
+
 	<List />
+
+	<InvestDialog bind:this={investDialogRef} />
 </main>
 
 <style lang="scss">
 	main {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
 		max-width: 768px;
 		margin: 0 auto;
 		padding: 30px 30px 80vh;
-	}
-
-	.page-header {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 20px;
-
-		.page-title {
-			font-family: 'Castoro', Georgia, 'Times New Roman', Times, serif;
-			margin: 0;
-		}
 	}
 </style>
