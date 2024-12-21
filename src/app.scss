@@ -51,7 +51,7 @@ button {
     box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
     transition: var(--transition);
 
-    &:hover {
+    &:hover:not([disabled]) {
         cursor: pointer;
         color: var(--blue);
     }
@@ -64,6 +64,10 @@ button {
         box-shadow:
             0 14px 12px -10px rgb(0 0 0 / 14%),
             0 4px 10px rgb(0 0 0 / 14%);
+
+        &[disabled] {
+            background: #9c9c9c;
+        }
     }
 }
 
