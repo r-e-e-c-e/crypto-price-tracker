@@ -104,8 +104,6 @@ To improve this project I would:
 
 ---
 
----
-
 ## Running the Project
 
 Make sure to have the latest LTS version of [Node](https://nodejs.org/en) installed.
