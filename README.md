@@ -108,14 +108,13 @@ To improve this project I would:
 
 ## Running the Project
 
-Pre
-Install latest LTS version of [Node](https://nodejs.org/en).
-Clone repo.
-Open root folder in IDE (e.g. [VS Code](https://code.visualstudio.com/download)).
+Make sure to have the latest LTS version of [Node](https://nodejs.org/en) installed.
 
-1. Install dependencies: `npm install`.
-2. Run app in dev mode: `npm run dev`.
-3. Go to http://localhost:5173/.
+Clone repo and open root folder in IDE (e.g. [VS Code](https://code.visualstudio.com/download)).
+
+1. First install dependencies by running: `npm install`.
+2. Then run the app in dev mode by running: `npm run dev`.
+3. Go to http://localhost:5173/ to view app.
 
 ## Building the Project
 
