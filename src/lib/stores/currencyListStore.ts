@@ -8,28 +8,25 @@ export const sortBy = writable<'currency' | 'price'>('currency');
 export const sortOrder = writable<'asc' | 'desc'>('asc');
 export const filterQuery = writable<string>('');
 
-export const filteredList = derived([list, filterQuery], ([$list, $filterQuery]) => {
-	return $filterQuery.length === 0
-		? $list
-		: $list.filter((item) => item.label.toLowerCase().includes($filterQuery.toLowerCase()));
+export const sortedList = derived([list, sortBy, sortOrder], ([$list, $sortBy, $sortOrder]) => {
+	return [...$list].sort((a, b) => {
+		let comparison = 0;
+
+		if ($sortBy === 'currency') {
+			comparison = a.label.localeCompare(b.label);
+		} else if ($sortBy === 'price') {
+			comparison = (a.price ?? 0) - (b.price ?? 0); //TODO: Improve null handling
+		}
+
+		return $sortOrder === 'asc' ? comparison : -comparison;
+	});
 });
 
-export const sortedList = derived(
-	[filteredList, sortBy, sortOrder],
-	([$filteredList, $sortBy, $sortOrder]) => {
-		return [...$filteredList].sort((a, b) => {
-			let comparison = 0;
-
-			if ($sortBy === 'currency') {
-				comparison = a.label.localeCompare(b.label);
-			} else if ($sortBy === 'price') {
-				comparison = (a.price ?? 0) - (b.price ?? 0); //TODO: Improve null handling
-			}
-
-			return $sortOrder === 'asc' ? comparison : -comparison;
-		});
-	}
-);
+export const filteredList = derived([sortedList, filterQuery], ([$sortedList, $filterQuery]) => {
+	return $filterQuery.length === 0
+		? $sortedList
+		: $sortedList.filter((item) => item.label.toLowerCase().includes($filterQuery.toLowerCase()));
+});
 
 export function setSortCriteria(criteria: 'currency' | 'price') {
 	sortOrder.subscribe((currSortOrder) => {

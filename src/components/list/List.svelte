@@ -1,14 +1,14 @@
 <script>
-	import { sortedList } from '$lib/stores/currencyListStore';
+	import { filteredList, sortedList } from '$lib/stores/currencyListStore';
 	import ListHeader from './ListHeader.svelte';
 	import ListItem from './ListItem.svelte';
 </script>
 
 <div class="list">
 	<ListHeader />
-	{#if $sortedList.length > 0}
+	{#if $filteredList.length > 0}
 		<ul class="list-items">
-			{#each $sortedList as item}
+			{#each $filteredList as item}
 				<ListItem {item} />
 			{/each}
 		</ul>
@@ -19,8 +19,6 @@
 
 <style>
 	.list {
-		margin-top: 20px;
-
 		.list-items {
 			list-style: none;
 			padding: 0;
