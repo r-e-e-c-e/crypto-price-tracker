@@ -27,9 +27,15 @@ export type SubscriptionConfirmation = {
 	channels: Channel[];
 };
 
+export type ErrorMessage = {
+	type: 'error';
+	message: string;
+	reason: string;
+};
+
 export type Channel = {
 	name: string;
 	product_ids: string[];
 };
 
-export type CoinbaseMessage = TickerMessage | SubscriptionConfirmation;
+export type CoinbaseMessage = TickerMessage | SubscriptionConfirmation | ErrorMessage;
