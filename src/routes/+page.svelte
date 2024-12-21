@@ -21,6 +21,7 @@
 	import InvestDialog from '../components/dialogs/InvestDialog.svelte';
 	import PageHeader from '../components/PageHeader.svelte';
 
+	let wsConnected = writable(false);
 	let disconnectFromWS = writable<Function | null>(null);
 	let throttleTimeout: ReturnType<typeof setTimeout> | null = null;
 
@@ -55,8 +56,12 @@
 		// Connect to Coinbase WS
 		const productIdsToListenFor: string[] = $list.map((item) => item.id);
 		const { connect, disconnect, subscribe } = createCoinbaseWebSocket(productIdsToListenFor);
+
 		disconnectFromWS.set(disconnect);
+
 		subscribe((wsState) => {
+			wsConnected.set(wsState.connected);
+
 			if (wsState.messages.length > 0) {
 				batchUpdateList(wsState.messages);
 			}
@@ -165,7 +170,10 @@
 </script>
 
 <main>
-	<PageHeader onInvestClick={() => investDialogRef.openModal()} />
+	<PageHeader
+		onInvestClick={() => investDialogRef.openModal()}
+		liveUpdatingEnabled={$wsConnected}
+	/>
 
 	{#if $investments.length > 0}
 		<Investments />

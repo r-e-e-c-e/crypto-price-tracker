@@ -42,6 +42,7 @@ export function createCoinbaseWebSocket(productIds: string[]) {
 				if (data.type === 'error') {
 					console.log(`Error occurred when subscribing to Coinbase WS channel.`);
 					set({ connected: false, messages: [], error: data.reason });
+					// TODO: Fix error state when a successful message comes in afterwards.
 				} else {
 					messageBuffer.push(data);
 				}
