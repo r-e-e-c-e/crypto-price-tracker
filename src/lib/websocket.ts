@@ -37,7 +37,6 @@ export function createCoinbaseWebSocket(productIds: string[]) {
 		socket.onmessage = (event: MessageEvent) => {
 			try {
 				const data: CoinbaseMessage = JSON.parse(event.data);
-				console.log(data);
 
 				if (data.type === 'error') {
 					console.log(`Error occurred when subscribing to Coinbase WS channel.`);
