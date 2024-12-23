@@ -14,7 +14,6 @@
 	import { writable } from 'svelte/store';
 	import List from '../components/list/List.svelte';
 	import Search from '../components/Search.svelte';
-	import InvestForm from '../components/forms/InvestForm.svelte';
 	import '../app.scss';
 	import { getInvestmentsFromLocalStorage, investments } from '$lib/stores/investmentsStore';
 	import Investments from '../components/Investments.svelte';
