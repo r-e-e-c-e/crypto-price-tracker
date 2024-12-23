@@ -9,6 +9,7 @@ export const currentProductsForInvestments = derived(
 	[investments, sortedList],
 	([$investments, $sortedList]) => {
 		const investmentsIdsSet = new Set($investments.map((investment) => investment.id));
+
 		return $sortedList
 			.filter((item) => investmentsIdsSet.has(item.id))
 			.reduce(
