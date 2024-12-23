@@ -1,5 +1,12 @@
 <script lang="ts">
 	import { currentProductsForInvestments, investments } from '$lib/stores/investmentsStore';
+	import type { Investment } from '$lib/types/Investment';
+
+	function getInvestmentValueLabel(investment: Investment) {
+		const currentPriceForProduct = $currentProductsForInvestments[investment.label];
+		const currentValueInUSD = currentPriceForProduct * investment.amount;
+		return currentValueInUSD.toFixed(2);
+	}
 </script>
 
 <div class="investments">
@@ -17,17 +24,19 @@
 					{new Date(investment.date).toLocaleDateString()}
 					{new Date(investment.date).toLocaleTimeString()}
 				</div>
-				<div class="current-value">
-					Current value: $<span
-						class="value"
-						class:profit={$currentProductsForInvestments[investment.label] >
-							investment.usdPerProductAtPurchase}
-						class:loss={$currentProductsForInvestments[investment.label] <
-							investment.usdPerProductAtPurchase}
-						>{$currentProductsForInvestments[investment.label]}</span
-					>
+				<div class="current-price">
+					Current price: ${$currentProductsForInvestments[investment.label]}
 				</div>
-				<div class="diff">
+				<div class="current-value">
+					Current value: $<span class="value"> {getInvestmentValueLabel(investment)}</span>
+				</div>
+				<div
+					class="diff"
+					class:profit={$currentProductsForInvestments[investment.label] >
+						investment.usdPerProductAtPurchase}
+					class:loss={$currentProductsForInvestments[investment.label] <
+						investment.usdPerProductAtPurchase}
+				>
 					{$currentProductsForInvestments[investment.label] > investment.usdPerProductAtPurchase
 						? 'Up'
 						: 'Down'}
@@ -64,7 +73,7 @@
 					font-weight: bold;
 				}
 
-				.current-value .profit {
+				.profit {
 					color: green;
 				}
 
