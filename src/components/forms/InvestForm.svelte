@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { list, sortedList } from '$lib/stores/currencyListStore';
+	import { list } from '$lib/stores/currencyListStore';
 	import { investments } from '$lib/stores/investmentsStore';
 	import { derived, writable } from 'svelte/store';
 
@@ -8,6 +8,12 @@
 
 	const formCryptocurrencyId = writable<string | null>(null);
 	const formAmount = writable<number | null>(null);
+
+	const sortedList = derived(list, ($list) => {
+		return $list.sort((a, b) => {
+			return a.label.localeCompare(b.label);
+		});
+	});
 
 	const selectedItem = derived([formCryptocurrencyId, list], ([$formCryptocurrencyId, $list]) => {
 		if ($formCryptocurrencyId === null) return null;
