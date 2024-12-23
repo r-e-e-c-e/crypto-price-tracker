@@ -30,6 +30,7 @@
 				<div class="current-value">
 					Current value: $<span class="value"> {getInvestmentValueLabel(investment)}</span>
 				</div>
+
 				<div
 					class="diff"
 					class:profit={$currentProductsForInvestments[investment.label] >
@@ -37,12 +38,16 @@
 					class:loss={$currentProductsForInvestments[investment.label] <
 						investment.usdPerProductAtPurchase}
 				>
-					{$currentProductsForInvestments[investment.label] > investment.usdPerProductAtPurchase
-						? 'Up'
-						: 'Down'}
-					${Math.abs(
-						$currentProductsForInvestments[investment.label] - investment.usdPerProductAtPurchase
-					).toFixed(2)}
+					{#if $currentProductsForInvestments[investment.label] !== investment.usdPerProductAtPurchase}
+						{$currentProductsForInvestments[investment.label] > investment.usdPerProductAtPurchase
+							? 'Up'
+							: 'Down'}
+						${Math.abs(
+							$currentProductsForInvestments[investment.label] - investment.usdPerProductAtPurchase
+						).toFixed(2)}
+					{:else}
+						<div>No change in value.</div>
+					{/if}
 				</div>
 			</div>
 		{/each}
