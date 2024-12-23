@@ -145,6 +145,7 @@
 
 	async function getList() {
 		const allProducts = await fetchProducts();
+
 		const filteredProducts = allProducts.filter((product) => {
 			return product.quote_currency === 'USD' && product.status === 'online';
 		});
@@ -157,6 +158,7 @@
 				label: product.base_currency,
 				price: null,
 				volume: null,
+				increment: Number(product.base_increment),
 				lastUpdated
 			};
 

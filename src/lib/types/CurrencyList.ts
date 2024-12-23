@@ -3,6 +3,7 @@ export type ListItem = {
 	label: string;
 	price: number | null;
 	volume: number | null;
+	increment: number;
 	lastUpdated: string;
 };
 

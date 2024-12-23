@@ -18,7 +18,12 @@
 		[selectedItem, formAmount],
 		([$selectedItem, $formAmount]) => {
 			if (!$selectedItem || !$formAmount || !$selectedItem.price) return null;
-			return $formAmount / $selectedItem.price;
+
+			const amountPurchased: number = $formAmount / $selectedItem.price;
+			const amountPurchasedRounded: number =
+				Math.floor(amountPurchased / $selectedItem.increment) * $selectedItem.increment;
+
+			return amountPurchasedRounded;
 		}
 	);
 
@@ -78,8 +83,11 @@
 
 	{#if $amountOfProductToReceive !== null && $selectedItem}
 		<div class="amount-of-product">
-			You will receive {$amountOfProductToReceive}
-			{$selectedItem.label}.
+			<p>Current price for {$selectedItem.label}: ${$selectedItem.price}.</p>
+			<p>
+				You will receive {$amountOfProductToReceive}
+				{$selectedItem.label}.
+			</p>
 		</div>
 	{/if}
 
